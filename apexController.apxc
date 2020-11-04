@@ -1,0 +1,28 @@
+public with sharing class apexController {
+
+    @AuraEnabled
+    public static Effort__c createEffortRecord(Id ParentRecordID){
+        Effort__c effort = new Effort__c();
+        effort.Case__c = ParentRecordID;
+        effort.Start_DateTime__c = DateTime.now();
+        insert effort;
+        return effort;
+    }
+    
+    @AuraEnabled
+    public static Effort__c updateEffortRecord(Effort__c effort) {
+        effort.End_DateTime__c = DateTime.now();
+        update effort;
+		return effort;
+    }
+    
+    @AuraEnabled
+    public static List<Effort__c> retrieveEffortRecord(Id ParentRecordID)
+    {
+        if(ParentRecordID != null){
+            return [SELECT Id, Start_DateTime__c FROM Effort__c WHERE Case__c = :ParentRecordID AND (Start_DateTime__c != NULL AND End_DateTime__c = NULL)];
+        } else {
+            return null;
+        }
+    }
+}

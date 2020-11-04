@@ -1,0 +1,20 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" controller="apexController" access="global" >
+    
+    <aura:attribute name="ltngCurrTime" type="String" default="00:00:00"/>
+    <aura:attribute name="ltngIsDisplayed" type="boolean" default="false"/>
+    <aura:attribute name="effortRecord" type="Effort__c" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <lightning:card variant="Narrow" title="Effort Tracker" iconName="custom:custom25">
+        <p class="slds-text-heading_large slds-align_absolute-center slds-p-bottom_x-small">
+            <b>{!v.ltngCurrTime}</b>
+        </p>        
+        
+        <div class="slds-align_absolute-center">
+            <lightning:button variant="brand" label="Start" onclick="{!c.handleStartClick}" disabled="{!v.ltngIsDisplayed}" />
+            <lightning:button variant="brand" label="Stop" onclick="{!c.handleStopClick}" disabled="{! !v.ltngIsDisplayed}" />
+        </div>
+    </lightning:card>
+    
+</aura:component>
